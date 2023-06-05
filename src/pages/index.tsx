@@ -11,8 +11,16 @@ type PostProps = {
 };
 
 const Post = ({ post }: PostProps) => {
-  const { content } = post;
+  const { id, content } = post;
   const { data: sessionData } = useSession();
+
+  const ctx = api.useContext();
+
+  const { mutate: deleteMutation } = api.post.delete.useMutation({
+    onSettled: async () => {
+      await ctx.post.getAll.invalidate();
+    },
+  });
 
   return (
     <div className="flex gap-3 p-4">
@@ -24,6 +32,12 @@ const Post = ({ post }: PostProps) => {
         className="rounded-xl"
       />
       <p className="flex flex-col justify-center text-white">{content}</p>
+      <button
+        className="rounded-xl bg-red-500 p-2 text-white"
+        onClick={() => deleteMutation(id)}
+      >
+        del
+      </button>
     </div>
   );
 };
@@ -49,6 +63,7 @@ const CreatePost = () => {
 
   const { mutate } = api.post.create.useMutation({
     onSettled: async () => {
+      setInput("");
       await ctx.post.getAll.invalidate();
     },
   });
