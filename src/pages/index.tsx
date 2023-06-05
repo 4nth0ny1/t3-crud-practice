@@ -4,18 +4,19 @@ import Head from "next/head";
 import { api } from "~/utils/api";
 import type { Post } from "../types";
 import { useState } from "react";
+import Image from "next/image";
 
 type PostProps = {
   post: Post;
 };
 
 const Post = ({ post }: PostProps) => {
-  const { id, content } = post;
+  const { content } = post;
   const { data: sessionData } = useSession();
 
   return (
     <div className="flex gap-3 p-4">
-      <img
+      <Image
         src={sessionData?.user.image}
         alt="profile image"
         width={56}
@@ -60,7 +61,7 @@ const CreatePost = () => {
         mutate(input);
       }}
     >
-      <img
+      <Image
         src={sessionData?.user.image}
         alt="profile image"
         width={56}
