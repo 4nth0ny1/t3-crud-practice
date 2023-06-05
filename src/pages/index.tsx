@@ -112,10 +112,10 @@ const Home: NextPage = () => {
         <h1 className="text-3xl text-white">t3 crud practice</h1>
         <AuthShowcase />
         <br></br>
-        <hr></hr>
+
         <CreatePost />
         <br></br>
-        <hr></hr>
+
         <Posts />
       </main>
     </>
